@@ -1,4 +1,24 @@
+# Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: api/v1alpha1
+    except:
+      - buf.build/googleapis/googleapis
 plugins:
   - plugin: buf.build/protocolbuffers/go:v1.28.1
     out: api
@@ -8,3 +28,7 @@ plugins:
     opt:
       - paths=source_relative
       - require_unimplemented_servers=false
+  - plugin: buf.build/grpc-ecosystem/gateway:v2.16.2
+    out: api
+    opt:
+      - paths=source_relative

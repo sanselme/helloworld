@@ -8,6 +8,17 @@ plugins:
       uri: https://github.com/trunk-io/plugins
 lint:
   enabled:
+    - shellcheck@0.9.0
+    - shfmt@3.6.0
+    - codespell@2.2.5
+    - goimports@0.9.1
+    - buf-breaking@1.26.1
+    - buf-format@1.26.1
+    - gitleaks@8.17.0
+    - gofumpt@0.5.0
+    - golines@0.11.0
+    - nancy@1.0.42
+    - semgrep@1.35.0
     - buf-lint@1.26.1
     - checkov@2.3.361
     - git-diff-check
