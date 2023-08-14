@@ -25,7 +25,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	api "github.com/sanselme/helloworld/api/v1alpha1"
-	"github.com/sanselme/helloworld/internal/handler"
+	"github.com/sanselme/helloworld/pkg/handler"
 
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
