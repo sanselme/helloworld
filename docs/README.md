@@ -1,4 +1,12 @@
-/*
+# Documentation
+
+***
+
+[API Documentation](./openapi/index.html)
+[API Spec](./openapi/v1alpha1/hello_world.swagger.json)
+
+***
+
 Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 
 This program is free software: you can redistribute it and/or modify
@@ -13,32 +21,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/
-package cli
-
-import (
-	"github.com/anselmes/util/pkg/cli"
-	"github.com/anselmes/util/pkg/version"
-	"github.com/spf13/cobra"
-)
-
-var uri string
-
-func Command() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:     "helloworld",
-		Short:   "Hello world",
-		Version: version.GetVersion(),
-	}
-
-	cmd.AddCommand(NewServerCommand())
-	cmd.AddCommand(NewGatewayCommand())
-
-	return cmd
-}
-
-func Run() int {
-	cmd := Command()
-	cli.Run(cmd)
-	return 0
-}

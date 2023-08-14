@@ -19,9 +19,33 @@ package main
 import (
 	"os"
 
-	"github.com/sanselme/helloworld/internal/cli"
+	"github.com/anselmes/util/pkg/util"
+	"github.com/anselmes/util/pkg/version"
+	"github.com/sanselme/helloworld/cmd/daemon/service"
+	"github.com/spf13/cobra"
 )
 
+func command() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:     "helloworld",
+		Short:   "Hello world",
+		Version: version.GetVersion(),
+	}
+
+	cmd.AddCommand(service.NewServiceCommand())
+	cmd.AddCommand(service.NewGatewayCommand())
+
+	return cmd
+}
+
+func execute() int {
+	err := command().Execute()
+	if err != nil {
+		util.CheckErr(err)
+	}
+	return 0
+}
+
 func main() {
-	os.Exit(cli.Run())
+	os.Exit(execute())
 }

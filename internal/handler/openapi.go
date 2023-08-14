@@ -14,9 +14,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
-package docs
+package handler
 
-import "embed"
+import (
+	"log"
+	"net/http"
+	"path"
+	"strings"
+)
 
-//go:embed openapi/*
-var OpenAPI embed.FS
+func OpenAPIServer(dir string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// if !strings.HasSuffix(r.URL.Path, ".swagger.json") {
+		// 	http.NotFound(w, r)
+		// 	return
+		// }
+
+		log.Printf("serving %s", r.URL.Path)
+		p := strings.TrimPrefix(r.URL.Path, "/openapiv2/")
+		p = path.Join(dir, p)
+		http.ServeFile(w, r, p)
+	}
+}

@@ -13,26 +13,35 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/package service
+*/
+package service
 
 import (
 	"context"
-	"fmt"
 
-	api "github.com/sanselme/helloworld/api/v1alpha1"
+	"github.com/anselmes/util/pkg/host"
+	"github.com/sanselme/helloworld/internal"
+	"github.com/spf13/cobra"
 )
 
-type server struct {
-	api.UnimplementedGreeterServiceServer
-}
+func NewServiceCommand() *cobra.Command {
+	ctx := context.Background()
+	ep := host.Endpoint{}
 
-func (s *server) SayHello(
-	ctx context.Context,
-	in *api.SayHelloRequest,
-) (*api.SayHelloResponse, error) {
-	return &api.SayHelloResponse{Message: fmt.Sprintf("%s world", in.Name)}, nil
-}
+	cmd := &cobra.Command{
+		Use:     "service",
+		Aliases: []string{"svc"},
+		Short:   "helloworld service",
+		Run: func(cmd *cobra.Command, args []string) {
+			err := internal.RunService(ctx, ep)
+			if err != nil {
+				cmd.PrintErrln(err)
+			}
+		},
+	}
 
-func NewServer() *server {
-	return &server{}
+	cmd.Flags().StringVar(&ep.Address, "address", "localhost", "Address to listen on")
+	cmd.Flags().IntVarP(&ep.Port, "port", "p", 8080, "port to listen on")
+
+	return cmd
 }
