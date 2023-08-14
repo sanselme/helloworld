@@ -21,6 +21,7 @@
 go.work
 
 # Project files
-*.pb.go
+.cache/
 *.gw.go
+*.pb.go
 bin/

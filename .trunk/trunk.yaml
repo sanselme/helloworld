@@ -7,10 +7,18 @@ plugins:
       ref: v1.1.1
       uri: https://github.com/trunk-io/plugins
 lint:
+  disabled:
+    - prettier
+    - codespell
+    - semgrep
   enabled:
+    - stylelint@15.10.2
+    - djlint@1.32.1
+    - eslint@8.47.0
+    - oxipng@8.0.0
+    - rome@12.1.3
     - shellcheck@0.9.0
     - shfmt@3.6.0
-    - codespell@2.2.5
     - goimports@0.9.1
     - buf-breaking@1.26.1
     - buf-format@1.26.1
@@ -18,19 +26,17 @@ lint:
     - gofumpt@0.5.0
     - golines@0.11.0
     - nancy@1.0.42
-    - semgrep@1.35.0
     - buf-lint@1.26.1
-    - checkov@2.3.361
+    - checkov@2.3.364
     - git-diff-check
     - gofmt@1.20.4
     - gokart@0.5.1
-    - golangci-lint@1.54.0
+    - golangci-lint@1.54.1
     - markdownlint@0.35.0
     - osv-scanner@1.3.6
-    - prettier@3.0.1
     - remark-lint@11.0.0
     - trivy@0.44.1
-    - trufflehog@3.47.0
+    - trufflehog@3.48.0
     - yamllint@1.32.0
 runtimes:
   enabled:

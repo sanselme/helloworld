@@ -32,3 +32,5 @@ plugins:
     out: api
     opt:
       - paths=source_relative
+  - plugin: buf.build/grpc-ecosystem/openapiv2:v2.16.2
+    out: docs/openapi

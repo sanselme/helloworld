@@ -34,9 +34,9 @@ func NewServerCommand() *cobra.Command {
 	ep := host.Endpoint{}
 
 	cmd := &cobra.Command{
-		Use:     "server",
-		Aliases: []string{"svr"},
-		Short:   "helloworld server",
+		Use:     "service",
+		Aliases: []string{"svc"},
+		Short:   "helloworld service",
 		Run: func(cmd *cobra.Command, args []string) {
 			uri = fmt.Sprintf("%s:%d", ep.Address, ep.Port)
 

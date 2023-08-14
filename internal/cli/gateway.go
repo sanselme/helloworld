@@ -13,16 +13,19 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
-*/
-package cli
+*/package cli
 
 import (
 	"fmt"
+	"io/fs"
 	"log"
+	"mime"
 	"net/http"
+	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	api "github.com/sanselme/helloworld/api/v1alpha1"
+	"github.com/sanselme/helloworld/docs"
 
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
@@ -54,13 +57,23 @@ func NewGatewayCommand() *cobra.Command {
 				util.CheckErr(err)
 			}
 
+			// Register generated routes to mux
 			mux := runtime.NewServeMux()
 			err = api.RegisterGreeterServiceHandler(cmd.Context(), mux, conn)
 			if err != nil {
 				util.CheckErr(err)
 			}
 
-			gw := &http.Server{Addr: uri, Handler: mux}
+			gw := &http.Server{
+				Addr: uri,
+				Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					if strings.HasPrefix(r.URL.Path, "/api") {
+						mux.ServeHTTP(w, r)
+						return
+					}
+					openapi().ServeHTTP(w, r)
+				}),
+			}
 
 			log.Println("gateway listening on", uri)
 			log.Fatal(gw.ListenAndServe())
@@ -73,4 +86,18 @@ func NewGatewayCommand() *cobra.Command {
 	cmd.Flags().IntVar(&svc.Port, "svc-port", 8080, "gRPC service port")
 
 	return cmd
+}
+
+func openapi() http.Handler {
+	err := mime.AddExtensionType(".svg", "image/svg+xml")
+	if err != nil {
+		util.CheckErr(err)
+	}
+
+	sfs, err := fs.Sub(docs.OpenAPI, "openapi")
+	if err != nil {
+		util.CheckErr(err)
+	}
+
+	return http.FileServer(http.FS(sfs))
 }
