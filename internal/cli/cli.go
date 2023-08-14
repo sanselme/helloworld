@@ -17,44 +17,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 package cli
 
 import (
-	"fmt"
-	"log"
-	"net"
-
-	api "github.com/sanselme/helloworld/api/v1alpha1"
-
 	"github.com/anselmes/util/pkg/cli"
-	"github.com/anselmes/util/pkg/host"
-	"github.com/anselmes/util/pkg/util"
 	"github.com/anselmes/util/pkg/version"
-	"github.com/sanselme/helloworld/internal/service"
 	"github.com/spf13/cobra"
-	"google.golang.org/grpc"
 )
 
-func Command() *cobra.Command {
-	host := host.Endpoint{}
+var uri string
 
+func Command() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "helloworld",
 		Short:   "Hello world",
 		Version: version.GetVersion(),
-		Run: func(cmd *cobra.Command, args []string) {
-			lis, err := net.Listen("tcp", fmt.Sprintf(":%d", host.Port))
-			if err != nil {
-				util.CheckErr(err)
-			}
-
-			server := grpc.NewServer()
-			service := service.NewServer()
-			api.RegisterGreeterServiceServer(server, service)
-
-			log.Println("Starting server on port", host.Port)
-			log.Fatal(server.Serve(lis))
-		},
 	}
 
-	cmd.Flags().IntVarP(&host.Port, "port", "p", 8080, "Port to listen on")
+	cmd.AddCommand(NewServerCommand())
+	cmd.AddCommand(NewGatewayCommand())
 
 	return cmd
 }

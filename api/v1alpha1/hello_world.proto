@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package api.v1alpha1;
 
-// import "google/api/annotations.proto";
+import "google/api/annotations.proto";
 
 // Here is the overall greeting service definition where we define all our endpoints
 service GreeterService {
   // Sends a greeting
   rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {
-    // option (google.api.http) = {
-    //   post: "/v1/hello"
-    //   body: "*"
-    // };
+    option (google.api.http) = {
+      post: "/api/v1alpha1/hello"
+      body: "*"
+    };
   }
 }
 

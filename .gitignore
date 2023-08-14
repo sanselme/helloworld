@@ -22,4 +22,5 @@ go.work
 
 # Project files
 *.pb.go
+*.gw.go
 bin/
