@@ -22,22 +22,17 @@ import (
 )
 
 func NewGatewayCommand() *cobra.Command {
-	gw := internal.Gateway{}
+	gw := internal.NewGateway()
 
 	cmd := &cobra.Command{
 		Use:     "gateway",
 		Aliases: []string{"gw"},
 		Short:   "helloworld gateway",
-		Run: func(cmd *cobra.Command, args []string) {
-			err := internal.RunGateway(cmd.Context(), gw)
-			if err != nil {
-				cmd.PrintErrln(err)
-			}
-		},
+		RunE:    gw.RunGateway,
 	}
 
-	cmd.Flags().StringVar(&gw.Address, "address", "localhost", "Address to listen on")
-	cmd.Flags().IntVarP(&gw.Port, "port", "p", 8081, "port to listen on")
+	cmd.Flags().StringVar(&gw.Endpoint.Address, "address", "localhost", "Address to listen on")
+	cmd.Flags().IntVarP(&gw.Endpoint.Port, "port", "p", 8081, "port to listen on")
 	cmd.Flags().StringVar(&gw.Service.Address, "svc-addr", "localhost", "gRPC service address")
 	cmd.Flags().IntVar(&gw.Service.Port, "svc-port", 8080, "gRPC service port")
 	cmd.Flags().StringVar(&gw.OpenAPIDir, "oa-dir", "docs/openapi", "OpenAPI directory")

@@ -26,6 +26,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	api "github.com/sanselme/helloworld/api/v1alpha1"
 	"github.com/sanselme/helloworld/pkg/handler"
+	"github.com/spf13/cobra"
 
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
@@ -33,15 +34,14 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-type Gateway struct {
-	Address    string
-	Port       int
+type gateway struct {
+	Endpoint   host.Endpoint
 	Service    host.Endpoint
 	OpenAPIDir string
 }
 
-func RunGateway(ctx context.Context, gw Gateway) error {
-	ctx, cancel := context.WithCancel(ctx)
+func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
+	ctx, cancel := context.WithCancel(cmd.Context())
 	defer cancel()
 
 	svc := fmt.Sprintf("%s:%d", gw.Service.Address, gw.Service.Port)
@@ -67,7 +67,7 @@ func RunGateway(ctx context.Context, gw Gateway) error {
 		util.CheckErr(err)
 	}
 
-	uri := fmt.Sprintf("%s:%d", gw.Address, gw.Port)
+	uri := fmt.Sprintf("%s:%d", gw.Endpoint.Address, gw.Endpoint.Port)
 	s := &http.Server{
 		Addr: uri,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -99,6 +99,10 @@ func RunGateway(ctx context.Context, gw Gateway) error {
 	}
 
 	return nil
+}
+
+func NewGateway() *gateway {
+	return &gateway{}
 }
 
 func dial(ctx context.Context, ep string) (*grpc.ClientConn, error) {

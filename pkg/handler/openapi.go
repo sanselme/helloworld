@@ -25,10 +25,10 @@ import (
 
 func OpenAPIServer(dir string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// if !strings.HasSuffix(r.URL.Path, ".swagger.json") {
-		// 	http.NotFound(w, r)
-		// 	return
-		// }
+		if !strings.HasSuffix(r.URL.Path, ".swagger.json") {
+			http.NotFound(w, r)
+			return
+		}
 
 		log.Printf("serving %s", r.URL.Path)
 		p := strings.TrimPrefix(r.URL.Path, "/openapiv2/")

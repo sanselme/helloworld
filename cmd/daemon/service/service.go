@@ -17,31 +17,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 package service
 
 import (
-	"context"
-
-	"github.com/anselmes/util/pkg/host"
 	"github.com/sanselme/helloworld/internal"
 	"github.com/spf13/cobra"
 )
 
 func NewServiceCommand() *cobra.Command {
-	ctx := context.Background()
-	ep := host.Endpoint{}
+	svc := internal.NewService()
 
 	cmd := &cobra.Command{
 		Use:     "service",
 		Aliases: []string{"svc"},
 		Short:   "helloworld service",
-		Run: func(cmd *cobra.Command, args []string) {
-			err := internal.RunService(ctx, ep)
-			if err != nil {
-				cmd.PrintErrln(err)
-			}
-		},
+		RunE:    svc.RunService,
 	}
 
-	cmd.Flags().StringVar(&ep.Address, "address", "localhost", "Address to listen on")
-	cmd.Flags().IntVarP(&ep.Port, "port", "p", 8080, "port to listen on")
+	cmd.Flags().StringVar(&svc.Endpoint.Address, "address", "localhost", "Address to listen on")
+	cmd.Flags().IntVarP(&svc.Endpoint.Port, "port", "p", 8080, "port to listen on")
 
 	return cmd
 }

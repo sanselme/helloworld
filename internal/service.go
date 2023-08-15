@@ -26,10 +26,13 @@ import (
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
 	api "github.com/sanselme/helloworld/api/v1alpha1"
+	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
 
-type service struct{}
+type service struct {
+	Endpoint host.Endpoint
+}
 
 func (s *service) SayHello(
 	ctx context.Context,
@@ -40,12 +43,8 @@ func (s *service) SayHello(
 	return &api.SayHelloResponse{Message: msg}, nil
 }
 
-func NewService() *service {
-	return &service{}
-}
-
-func RunService(ctx context.Context, ep host.Endpoint) error {
-	uri := fmt.Sprintf("%s:%d", ep.Address, ep.Port)
+func (s *service) RunService(cmd *cobra.Command, args []string) error {
+	uri := fmt.Sprintf("%s:%d", s.Endpoint.Address, s.Endpoint.Port)
 
 	// Create a TCP listener
 	l, err := net.Listen("tcp", uri)
@@ -63,7 +62,7 @@ func RunService(ctx context.Context, ep host.Endpoint) error {
 	api.RegisterGreeterServiceServer(server, NewService())
 	go func() {
 		defer server.GracefulStop()
-		<-ctx.Done()
+		<-cmd.Context().Done()
 	}()
 
 	// Start serving
@@ -73,4 +72,8 @@ func RunService(ctx context.Context, ep host.Endpoint) error {
 	}
 
 	return nil
+}
+
+func NewService() *service {
+	return &service{}
 }

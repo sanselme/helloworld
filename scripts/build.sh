@@ -16,6 +16,8 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 set -e
 
+DATE="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+
 case "${1}" in
 "daemon")
   TARGET_NAME="${APP_NAME}"
@@ -40,10 +42,12 @@ esac
 echo "Building ${TARGET_NAME}..."
 echo "Version: ${GIT_BRANCH}"
 echo "Commit: ${GIT_COMMIT}"
+echo "Date: ${DATE}"
 
 # build
 go build \
-  -ldflags "-X  github.com/anselmes/util/pkg/version.version=${GIT_BRANCH} \
-    -X  github.com/anselmes/util/pkg/version.commit=${GIT_COMMIT}" \
+  -ldflags "-X  github.com/sanselme/helloworld/pkg/version.Branch=${GIT_BRANCH} \
+    -X  github.com/sanselme/helloworld/pkg/version.Commit=${GIT_COMMIT} \
+    -X github.com/sanselme/helloworld/pkg/version.Date=${DATE}" \
   -o "bin/${TARGET_NAME}" \
   "./cmd/${1}"
