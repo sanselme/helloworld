@@ -12,6 +12,7 @@ lint:
     - codespell
     - semgrep
   enabled:
+    - hadolint@2.12.0
     - stylelint@15.10.2
     - djlint@1.32.1
     - eslint@8.47.0

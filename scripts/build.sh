@@ -20,16 +20,16 @@ DATE="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 
 case "${1}" in
 "daemon")
-  TARGET_NAME="${APP_NAME}"
+  APP_NAME="${APP_NAME}d"
   ;;
 "client")
-  TARGET_NAME="${APP_NAME}ctl"
+  APP_NAME="${APP_NAME}ctl"
   ;;
 "operator")
-  TARGET_NAME="${APP_NAME}-operator"
+  APP_NAME="${APP_NAME}-operator"
   ;;
 "plugin")
-  TARGET_NAME="kubectl-${APP_NAME}"
+  APP_NAME="kubectl-${APP_NAME}"
   ;;
 *)
   echo "error: missing argument!!!"
@@ -39,7 +39,7 @@ case "${1}" in
 esac
 
 # debug
-echo "Building ${TARGET_NAME}..."
+echo "Building ${2:-$APP_NAME}..."
 echo "Version: ${GIT_BRANCH}"
 echo "Commit: ${GIT_COMMIT}"
 echo "Date: ${DATE}"
@@ -49,5 +49,5 @@ go build \
   -ldflags "-X  github.com/sanselme/helloworld/pkg/version.Branch=${GIT_BRANCH} \
     -X  github.com/sanselme/helloworld/pkg/version.Commit=${GIT_COMMIT} \
     -X github.com/sanselme/helloworld/pkg/version.Date=${DATE}" \
-  -o "bin/${TARGET_NAME}" \
+  -o "${2:-bin/${APP_NAME}}" \
   "./cmd/${1}"
