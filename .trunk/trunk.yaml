@@ -12,6 +12,7 @@ lint:
     - codespell
     - semgrep
   enabled:
+    - kube-linter@0.6.4
     - hadolint@2.12.0
     - stylelint@15.10.2
     - djlint@1.32.1

@@ -24,4 +24,5 @@ go.work
 .cache/
 *.gw.go
 *.pb.go
+*.tgz
 bin/

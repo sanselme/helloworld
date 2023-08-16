@@ -1,0 +1,15 @@
+apiVersion: v2
+name: hello-common
+description: A library chart for hello common resources
+type: library
+version: 0.1.0-dev
+# dependencies:
+#   - name: cert-manager
+#     version:
+#     repository: https://charts.jetstack.io/
+#   - name: trust-manager
+#     version:
+#     repository: https://charts.jetstack.io/
+#   - name: flux
+#     version:
+#     repository:
