@@ -17,7 +17,13 @@
 set -e
 
 if [[ -f .env ]]; then
-  echo "Loading .env file"
+  echo "Loading .env"
+
+  : ${CHART_NAME:="hello-daemon"}
+  : ${DOCKER_FILE:="./build/img/Dockerfile"}
+  : ${IMAGE_NAME:="hellod"}
+  : ${TARGET:="daemon"}
+
   source .env
 else
   echo "No .env file found"

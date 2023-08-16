@@ -18,10 +18,6 @@ set -e
 
 source ./scripts/load-env.sh
 
-: ${DOCKER_FILE:="./build/img/Dockerfile"}
-: ${TARGET:="daemon"}
-: ${IMAGE_NAME:="hellod"}
-
 # debug
 echo """
 Image:      ${IMAGE_NAME}

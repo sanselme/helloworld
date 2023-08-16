@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	api "github.com/sanselme/helloworld/api/v1alpha1"
@@ -59,31 +58,22 @@ func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
-	mux := runtime.NewServeMux()
-
-	// Register generated routes to mux
-	err = api.RegisterGreeterServiceHandler(ctx, mux, conn)
+	// Register generated routes
+	rt := runtime.NewServeMux()
+	err = api.RegisterGreeterServiceHandler(ctx, rt, conn)
 	if err != nil {
-		util.CheckErr(err)
+		return err
 	}
 
+	// Register custom routes
+	mux := http.NewServeMux()
+	mux.Handle("/", handler.AllowCORS(rt))
+	mux.HandleFunc("/openapiv2/", handler.OpenAPIServer(gw.OpenAPIDir))
+	mux.HandleFunc("/healthz", handler.HealthServer(conn))
+
+	// Start HTTP server (and proxy calls to gRPC server endpoint)
 	uri := fmt.Sprintf("%s:%d", gw.Endpoint.Address, gw.Endpoint.Port)
-	s := &http.Server{
-		Addr: uri,
-		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/openapiv2/") {
-				handler.OpenAPIServer(gw.OpenAPIDir).ServeHTTP(w, r)
-				return
-			}
-
-			if strings.HasPrefix(r.URL.Path, "/healthz") {
-				handler.HealthServer(conn).ServeHTTP(w, r)
-				return
-			}
-
-			handler.AlloCORS(mux)
-		}),
-	}
+	s := &http.Server{Addr: uri, Handler: mux}
 	go func() {
 		<-ctx.Done()
 		log.Println("shutting down...")
@@ -109,6 +99,7 @@ func dial(ctx context.Context, ep string) (*grpc.ClientConn, error) {
 	return grpc.DialContext(
 		ctx,
 		ep,
+		grpc.WithBlock(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 }

@@ -22,7 +22,7 @@ import (
 	"strings"
 )
 
-func AlloCORS(h http.Handler) http.Handler {
+func AllowCORS(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if origin := r.Header.Get("Origin"); origin != "" {
 			w.Header().Set("Access-Control-Allow-Origin", origin)

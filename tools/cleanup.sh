@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -12,18 +14,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
-apiVersion: v2
-name: hello-common
-description: A library chart for hello common resources
-type: library
-version: 0.1.0-main
-# dependencies:
-#   - name: cert-manager
-#     version:
-#     repository: https://charts.jetstack.io/
-#   - name: trust-manager
-#     version:
-#     repository: https://charts.jetstack.io/
-#   - name: flux
-#     version:
-#     repository:
+
+set -e
+
+source ./scripts/load-env.sh
+
+# cleanup kind
+kind delete cluster --name="${CLUSTER_NAME}" || true
+
+# cleanup docker
+docker image rm -f "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" || true
+
+# cleanup temp dir
+rm -rf "${TEMP_DIR}" || true

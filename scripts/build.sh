@@ -39,7 +39,7 @@ case "${1}" in
 esac
 
 # debug
-echo "Building ${2:-$APP_NAME}..."
+echo "Building ${2:-${APP_NAME}}..."
 echo "Version: ${GIT_BRANCH}"
 echo "Commit: ${GIT_COMMIT}"
 echo "Date: ${DATE}"
