@@ -25,7 +25,8 @@ import (
 
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
-	api "github.com/sanselme/helloworld/api/v1alpha1"
+	"github.com/google/uuid"
+	api "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -38,9 +39,16 @@ func (s *service) SayHello(
 	ctx context.Context,
 	in *api.SayHelloRequest,
 ) (*api.SayHelloResponse, error) {
-	msg := fmt.Sprintf("%s world", in.Name)
-	log.Println(msg)
-	return &api.SayHelloResponse{Message: msg}, nil
+	event := &api.CloudEvent{
+		Id:          uuid.New().String(),
+		Source:      "https://github.com/sanselme/helloworld/api/v1alpha2",
+		SpecVersion: "1.0",
+		Type:        "es.anselm.helloworld",
+		Data:        &api.CloudEvent_TextData{TextData: in.GetName()},
+	}
+	log.Println(event)
+
+	return &api.SayHelloResponse{Message: event}, nil
 }
 
 func (s *service) RunService(cmd *cobra.Command, args []string) error {

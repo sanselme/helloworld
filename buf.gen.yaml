@@ -16,7 +16,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: api/v1alpha1
+    default: api/v1alpha2
     except:
       - buf.build/googleapis/googleapis
 plugins:

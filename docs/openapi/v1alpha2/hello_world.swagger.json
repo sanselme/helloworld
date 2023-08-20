@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1alpha1/hello_world.proto",
+    "title": "v1alpha2/hello_world.proto",
     "version": "version not set"
   },
   "tags": [
@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/apiv1alpha1SayHelloResponse"
+              "$ref": "#/definitions/apiv1alpha2SayHelloResponse"
             }
           },
           "default": {
@@ -40,7 +40,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/apiv1alpha1SayHelloRequest"
+              "$ref": "#/definitions/apiv1alpha2SayHelloRequest"
             }
           }
         ],
@@ -51,7 +51,36 @@
     }
   },
   "definitions": {
-    "apiv1alpha1SayHelloRequest": {
+    "CloudEventCloudEventAttributeValue": {
+      "type": "object",
+      "properties": {
+        "ceBoolean": {
+          "type": "boolean"
+        },
+        "ceInteger": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ceString": {
+          "type": "string"
+        },
+        "ceBytes": {
+          "type": "string",
+          "format": "byte"
+        },
+        "ceUri": {
+          "type": "string"
+        },
+        "ceUriRef": {
+          "type": "string"
+        },
+        "ceTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "apiv1alpha2SayHelloRequest": {
       "type": "object",
       "properties": {
         "name": {
@@ -61,11 +90,11 @@
       },
       "title": "The request message containing the user's name"
     },
-    "apiv1alpha1SayHelloResponse": {
+    "apiv1alpha2SayHelloResponse": {
       "type": "object",
       "properties": {
         "message": {
-          "type": "string",
+          "$ref": "#/definitions/v1alpha2CloudEvent",
           "title": "The message to greet the person with"
         }
       },
@@ -98,6 +127,42 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1alpha2CloudEvent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Required Attributes"
+        },
+        "source": {
+          "type": "string",
+          "title": "URI-reference"
+        },
+        "specVersion": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CloudEventCloudEventAttributeValue"
+          },
+          "title": "Optional \u0026 Extension Attributes"
+        },
+        "binaryData": {
+          "type": "string",
+          "format": "byte"
+        },
+        "textData": {
+          "type": "string"
+        },
+        "protoData": {
+          "$ref": "#/definitions/protobufAny"
         }
       }
     }
