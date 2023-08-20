@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 #
@@ -9,20 +9,12 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program. If not, see <https://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 set -e
 
-source ./scripts/load-env.sh
-
-# cleanup kind
-kind delete cluster --name="${CLUSTER_NAME}" || true
-
-# cleanup docker
-docker image rm -f "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}" || true
-
-# cleanup temp dir
-rm -rf "${TEMP_DIR}" || true
+# generate cosign key pair
+cosign generate-key-pair

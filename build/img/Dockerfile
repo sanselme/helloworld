@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 ARG BUILD_IMAGE=golang:1.19
 ARG RUNTIME_IMAGE=gcr.io/distroless/static:nonroot
 
