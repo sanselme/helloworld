@@ -1,6 +1,6 @@
-# Readme
+# Hello Operator
 
-[Documentation](./docs/README.md)
+hello-operator is a simple operator for Hello.
 
 ***
 

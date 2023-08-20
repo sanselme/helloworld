@@ -1,9 +1,4 @@
-# Readme
-
-[Documentation](./docs/README.md)
-
-***
-
+/*
 Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 
 This program is free software: you can redistribute it and/or modify
@@ -18,3 +13,20 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/package handler
+
+import (
+	"log"
+	"net/http"
+	"path"
+	"strings"
+)
+
+func OpenAPIServer(dir string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("serving %s", r.URL.Path)
+		p := strings.TrimPrefix(r.URL.Path, "/openapiv2/")
+		p = path.Join(dir, p)
+		http.ServeFile(w, r, p)
+	}
+}

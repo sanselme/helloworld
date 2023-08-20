@@ -1,9 +1,4 @@
-# Readme
-
-[Documentation](./docs/README.md)
-
-***
-
+/*
 Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 
 This program is free software: you can redistribute it and/or modify
@@ -18,3 +13,32 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+package version
+
+import (
+	"fmt"
+	"time"
+)
+
+var (
+	Branch string
+	Commit string
+	Date   string
+)
+
+func GetVersion() string {
+	if Branch == "" {
+		Branch = "dev"
+	}
+
+	if Commit == "" {
+		Commit = "unknown"
+	}
+
+	if Date == "" {
+		Date = time.Now().Format(time.RFC3339)
+	}
+
+	return fmt.Sprintf("%s\nbuild: %s\ndate: %s", Branch, Commit, Date)
+}

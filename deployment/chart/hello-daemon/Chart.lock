@@ -1,0 +1,6 @@
+dependencies:
+- name: hello-common
+  repository: file://../hello-common
+  version: 0.1.0-main
+digest: sha256:767900d0f6a7ad8b94729940dc29e7ec0011c9f79d9ddaf62d866d0d58d4a38b
+generated: "2023-08-16T00:37:10.200287-04:00"

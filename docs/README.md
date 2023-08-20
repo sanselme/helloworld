@@ -1,6 +1,9 @@
-# Readme
+# Documentation
 
-[Documentation](./docs/README.md)
+***
+
+[API Documentation](./openapi/index.html)
+[API Spec](./openapi/v1alpha1/hello_world.swagger.json)
 
 ***
 

@@ -1,0 +1,47 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ include "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.helloDaemonService.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.helloDaemonService.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.helloDaemonService.podSecurityContext | nindent 8 }}
+      containers:
+        - image: {{ .Values.helloDaemonService.image.repository }}:{{ .Values.helloDaemonService.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.helloDaemonService.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.helloDaemonService.securityContext | nindent 12 }}
+          ports:
+            - name: h2c
+              containerPort: {{ .Values.helloDaemonService.service.port }}
+          args:
+            - /hellod
+            - service
+            - --port={{ .Values.helloDaemonService.service.port }}
+      {{- with .Values.helloDaemonService.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloDaemonService.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloDaemonService.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

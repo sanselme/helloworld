@@ -1,6 +1,6 @@
-# Readme
+# Hello Client
 
-[Documentation](./docs/README.md)
+helloctl is a command line tool to interact with the Hello API.
 
 ***
 
