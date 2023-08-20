@@ -30,14 +30,16 @@ import (
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
-type gateway struct {
-	Endpoint   host.Endpoint
-	Service    host.Endpoint
-	OpenAPIDir string
-}
+type (
+	GatewayOption func(*gateway)
+	gateway       struct {
+		Endpoint   host.Endpoint
+		Service    host.Endpoint
+		OpenAPIDir string
+	}
+)
 
 func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
 	ctx, cancel := context.WithCancel(cmd.Context())
@@ -47,7 +49,7 @@ func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
 
 	// Create a client connection to the gRPC server we just started
 	// This is where the gRPC-Gateway proxies the requests
-	conn, err := dial(ctx, svc)
+	conn, err := Dial(ctx, svc, grpc.WithBlock())
 	if err != nil {
 		return err
 	}
@@ -91,15 +93,10 @@ func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func NewGateway() *gateway {
-	return &gateway{}
-}
-
-func dial(ctx context.Context, ep string) (*grpc.ClientConn, error) {
-	return grpc.DialContext(
-		ctx,
-		ep,
-		grpc.WithBlock(),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+func NewGateway(opts ...GatewayOption) *gateway {
+	gw := &gateway{}
+	for _, op := range opts {
+		op(gw)
+	}
+	return gw
 }
