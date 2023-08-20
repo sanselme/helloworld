@@ -1,0 +1,54 @@
+{{- if and .Values.helloDaemonGateway.enabled -}}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{ include "common.fullname" . }}-gw
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.helloDaemonGateway.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.helloDaemonGateway.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.helloDaemonGateway.podSecurityContext | nindent 8 }}
+      containers:
+        - image: {{ .Values.helloDaemonGateway.image.repository }}:{{ .Values.helloDaemonGateway.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.helloDaemonGateway.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.helloDaemonGateway.securityContext | nindent 12 }}
+          ports:
+            - name: h2c
+              containerPort: {{ .Values.helloDaemonGateway.service.port }}
+          args:
+            - /hellod
+            - gateway
+            - --port={{ .Values.helloDaemonGateway.service.port }}
+            - --svc-addr=hello-daemon-svc.hello.svc.cluster.local
+            - --svc-port={{ .Values.helloDaemonService.service.port }}
+            - --oa-dir=/openapiv2
+          resources:
+            {{- toYaml .Values.helloDaemonGateway.resources | nindent 12 }}
+      {{- with .Values.helloDaemonGateway.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloDaemonGateway.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.helloDaemonGateway.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

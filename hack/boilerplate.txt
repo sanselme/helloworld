@@ -1,9 +1,3 @@
-# Readme
-
-[Documentation](./docs/README.md)
-
-***
-
 Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 
 This program is free software: you can redistribute it and/or modify

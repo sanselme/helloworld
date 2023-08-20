@@ -1,6 +1,6 @@
-# Readme
+# Hello Daemon
 
-[Documentation](./docs/README.md)
+hellod is a simple Hello API server.
 
 ***
 

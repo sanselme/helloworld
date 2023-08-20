@@ -1,9 +1,4 @@
-# Readme
-
-[Documentation](./docs/README.md)
-
-***
-
+/*
 Copyright (c) 2023 Schubert Anselme <schubert@anselm.es>
 
 This program is free software: you can redistribute it and/or modify
@@ -18,3 +13,24 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+package handler
+
+import (
+	"fmt"
+	"net/http"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/connectivity"
+)
+
+func HealthServer(conn *grpc.ClientConn) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain")
+		if s := conn.GetState(); s != connectivity.Ready {
+			http.Error(w, fmt.Sprintf("service is %s", s), http.StatusBadGateway)
+			return
+		}
+		fmt.Fprintln(w, "OK")
+	}
+}

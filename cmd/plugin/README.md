@@ -1,6 +1,6 @@
-# Readme
+# Hello krew plugin
 
-[Documentation](./docs/README.md)
+kubectl-hello is a kubectl plugin for Hello.
 
 ***
 

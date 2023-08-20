@@ -1,0 +1,11 @@
+helloDaemonService:
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
+helloDaemonGateway:
+  enabled: true
+  service:
+    type: NodePort
+  ingress:
+    enabled: true
