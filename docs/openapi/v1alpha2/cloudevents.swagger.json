@@ -1,76 +1,17 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1alpha1/hello_world.proto",
+    "title": "v1alpha2/cloudevents.proto",
     "version": "version not set"
   },
-  "tags": [
-    {
-      "name": "GreeterService"
-    }
-  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "paths": {
-    "/api/v1alpha1/hello": {
-      "post": {
-        "summary": "Sends a greeting",
-        "operationId": "GreeterService_SayHello",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/apiv1alpha1SayHelloResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/apiv1alpha1SayHelloRequest"
-            }
-          }
-        ],
-        "tags": [
-          "GreeterService"
-        ]
-      }
-    }
-  },
+  "paths": {},
   "definitions": {
-    "apiv1alpha1SayHelloRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "The name of the person to greet"
-        }
-      },
-      "title": "The request message containing the user's name"
-    },
-    "apiv1alpha1SayHelloResponse": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "title": "The message to greet the person with"
-        }
-      },
-      "title": "The response message containing the greetings"
-    },
     "protobufAny": {
       "type": "object",
       "properties": {

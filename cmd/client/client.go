@@ -21,7 +21,7 @@ import (
 	"log"
 	"os"
 
-	api "github.com/sanselme/helloworld/api/v1alpha1"
+	api "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/sanselme/helloworld/internal"
 
 	"github.com/sanselme/helloworld/pkg/errors"
