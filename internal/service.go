@@ -44,7 +44,7 @@ func (s *service) SayHello(
 		Source:      "https://github.com/sanselme/helloworld/api/v1alpha2",
 		SpecVersion: "1.0",
 		Type:        "es.anselm.helloworld",
-		Data:        &api.CloudEvent_TextData{TextData: in.GetName()},
+		Data:        &api.CloudEvent_TextData{TextData: fmt.Sprintf("%s world!", in.GetName())},
 	}
 	log.Println(event)
 

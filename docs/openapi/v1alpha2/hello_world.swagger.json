@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1alpha1/hello": {
+    "/api/v1alpha2/hello": {
       "post": {
         "summary": "Sends a greeting",
         "operationId": "GreeterService_SayHello",
@@ -164,7 +164,8 @@
         "protoData": {
           "$ref": "#/definitions/protobufAny"
         }
-      }
+      },
+      "title": "-- CloudEvent Context Attributes"
     }
   }
 }

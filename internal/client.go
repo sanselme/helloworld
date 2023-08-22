@@ -18,7 +18,11 @@ package internal
 
 import (
 	"context"
+	"log"
 
+	api "github.com/sanselme/helloworld/api/v1alpha2"
+	"github.com/sanselme/helloworld/pkg/errors"
+	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -31,4 +35,36 @@ func Dial(ctx context.Context, ep string, opts ...grpc.DialOption) (*grpc.Client
 		ep,
 		opts...,
 	)
+}
+
+func RunClient(cmd *cobra.Command, args []string) error {
+	ctx, cancel := context.WithCancel(cmd.Context())
+	defer cancel()
+
+	ep, err := cmd.Flags().GetString("endpoint")
+	if err != nil {
+		return err
+	}
+
+	conn, err := Dial(ctx, ep)
+	if err != nil {
+		errors.CheckErr(err)
+	}
+	go func() {
+		<-ctx.Done()
+		if err := conn.Close(); err != nil {
+			errors.CheckErr(err)
+		}
+	}()
+
+	client := api.NewGreeterServiceClient(conn)
+	req := &api.SayHelloRequest{Name: args[0]}
+
+	res, err := client.SayHello(ctx, req)
+	if err != nil {
+		errors.CheckErr(err)
+	}
+
+	log.Println(res.Message)
+	return nil
 }
