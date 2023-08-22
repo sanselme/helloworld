@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.v1alpha2;
 
 import "google/api/annotations.proto";
-import "v1alpha2/cloudevents.proto";
+import "cloudevents.proto";
 
 // Here is the overall greeting service definition where we define all our endpoints
 service GreeterService {

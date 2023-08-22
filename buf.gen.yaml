@@ -19,6 +19,8 @@ managed:
     default: api/v1alpha2
     except:
       - buf.build/googleapis/googleapis
+    override:
+      buf.build/sanselme/api: github.com/sanselme/helloworld/api
 plugins:
   - plugin: buf.build/protocolbuffers/go:v1.28.1
     out: api

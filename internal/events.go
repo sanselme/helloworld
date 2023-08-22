@@ -19,52 +19,49 @@ package internal
 import (
 	"context"
 	"log"
+	"net/http"
 
-	apiv1alpha2 "github.com/sanselme/helloworld/api/v1alpha2"
-	"github.com/sanselme/helloworld/pkg/errors"
+	events "github.com/cloudevents/sdk-go/v2"
+	"github.com/sanselme/helloworld/pkg/host"
 	"github.com/spf13/cobra"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
-func Dial(ctx context.Context, ep string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
-	opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
-
-	return grpc.DialContext(
-		ctx,
-		ep,
-		opts...,
-	)
+type Event struct {
+	Endpoint host.Endpoint
 }
 
-func RunClient(cmd *cobra.Command, args []string) error {
+func (ev *Event) RunEvent(cmd *cobra.Command, _ []string) error {
 	ctx, cancel := context.WithCancel(cmd.Context())
 	defer cancel()
 
-	ep, err := cmd.Flags().GetString("endpoint")
+	proto, err := events.NewHTTP()
 	if err != nil {
 		return err
 	}
 
-	conn, err := Dial(ctx, ep)
+	// Create a new client
+	event, err := events.NewClient(proto)
 	if err != nil {
-		errors.CheckErr(err)
-	}
-	go func() {
-		<-ctx.Done()
-		if err := conn.Close(); err != nil {
-			errors.CheckErr(err)
-		}
-	}()
-
-	client := apiv1alpha2.NewGreeterServiceClient(conn)
-	req := &apiv1alpha2.SayHelloRequest{Name: args[0]}
-
-	res, err := client.SayHello(ctx, req)
-	if err != nil {
-		errors.CheckErr(err)
+		return err
 	}
 
-	log.Println(res.Message)
+	// Start the receiver
+	log.Println("listening on", ev.Endpoint.GetURI())
+	if err := event.StartReceiver(ctx, receive); err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func NewEvent() *Event {
+	return &Event{}
+}
+
+func receive(ctx context.Context, event events.Event) events.Result {
+	log.Println(event)
+	if event.Type() != "es.anselm.helloworld" {
+		return events.NewHTTPResult(http.StatusBadRequest, "invalid type of %s", event.Type())
+	}
+	return events.NewHTTPResult(http.StatusOK, "ok")
 }

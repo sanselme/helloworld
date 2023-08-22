@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1alpha2/cloudevents.proto",
+    "title": "cloudevents.proto",
     "version": "version not set"
   },
   "consumes": [
