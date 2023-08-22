@@ -10,7 +10,7 @@ service GreeterService {
   // Sends a greeting
   rpc SayHello(SayHelloRequest) returns (SayHelloResponse) {
     option (google.api.http) = {
-      post: "/api/v1alpha1/hello"
+      post: "/api/v1alpha2/hello"
       body: "*"
     };
   }
