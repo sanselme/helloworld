@@ -19,7 +19,7 @@
 set -e
 
 CACHE_DIR=".cache/swagger-ui"
-OUTPUT_DIR="./docs/swagger-ui"
+OUTPUT_DIR="./docs/openapi"
 SWAGGER_UI_REPO="https://github.com/swagger-api/swagger-ui.git"
 SWAGGER_UI_VERSION="${SWAGGER_UI_VERSION:-$1}"
 
@@ -43,7 +43,7 @@ if [[ ! -d ${CACHE_DIR} ]]; then
   rm -rf "${tmp}"
 fi
 
-# FIXME: populate swagger.json
+# populate swagger.json
 buf generate
 tmp="    urls: ["
 for i in $(find "${OUTPUT_DIR}" -name "*.swagger.json"); do
@@ -60,11 +60,11 @@ find "${OUTPUT_DIR}" -type f -name "*.swagger.json" -delete
 mkdir -p "${OUTPUT_DIR}"
 cp -r "${CACHE_DIR}/"* "${OUTPUT_DIR}"
 
-# FIXME: replace the default URL
+# replace the default URL
 line="$(cat "${OUTPUT_DIR}/swagger-initializer.js" | grep -n "url" | cut -f1 -d:)"
 escaped_tmp="$(escape_str "${tmp}")"
 sed -i'' -e "${line} s/^.*$/${escaped_tmp}/" "${OUTPUT_DIR}/swagger-initializer.js"
 rm -f "${OUTPUT_DIR}/swagger-initializer.js-e"
 
-# TODO: trunk.io
-# trunk fmt
+# trunk.io
+trunk fmt --all

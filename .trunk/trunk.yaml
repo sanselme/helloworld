@@ -1,6 +1,6 @@
 version: 0.1
 cli:
-  version: 1.13.0
+  version: 1.14.1
 plugins:
   sources:
     - id: trunk
@@ -12,9 +12,11 @@ lint:
     - codespell
     - semgrep
   enabled:
+    - actionlint@1.6.25
+    - terrascan@1.18.3
     - kube-linter@0.6.4
     - hadolint@2.12.0
-    - stylelint@15.10.2
+    - stylelint@15.10.3
     - djlint@1.32.1
     - eslint@8.47.0
     - oxipng@8.0.0
@@ -29,7 +31,7 @@ lint:
     - golines@0.11.0
     - nancy@1.0.42
     - buf-lint@1.26.1
-    - checkov@2.3.364
+    - checkov@2.4.5
     - git-diff-check
     - gofmt@1.20.4
     - gokart@0.5.1

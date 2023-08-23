@@ -23,7 +23,7 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	api "github.com/sanselme/helloworld/api/v1alpha1"
+	apiv1alpha2 "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/sanselme/helloworld/pkg/handler"
 	"github.com/spf13/cobra"
 
@@ -62,14 +62,14 @@ func (gw *gateway) RunGateway(cmd *cobra.Command, args []string) error {
 
 	// Register generated routes
 	rt := runtime.NewServeMux()
-	err = api.RegisterGreeterServiceHandler(ctx, rt, conn)
+	err = apiv1alpha2.RegisterGreeterServiceHandler(ctx, rt, conn)
 	if err != nil {
 		return err
 	}
 
 	// Register custom routes
 	mux := http.NewServeMux()
-	mux.Handle("/", handler.AllowCORS(rt))
+	mux.Handle("/", rt)
 	mux.HandleFunc("/openapiv2/", handler.OpenAPIServer(gw.OpenAPIDir))
 	mux.HandleFunc("/healthz", handler.HealthServer(conn))
 

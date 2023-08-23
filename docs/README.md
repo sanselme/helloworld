@@ -3,7 +3,7 @@
 ***
 
 [API Documentation](./openapi/index.html)
-[API Spec](./openapi/v1alpha1/hello_world.swagger.json)
+[API Spec](./openapi/v1alpha2/hello_world.swagger.json)
 
 ***
 

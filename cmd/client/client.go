@@ -17,13 +17,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	"context"
-	"log"
 	"os"
 
-	api "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/sanselme/helloworld/internal"
-
 	"github.com/sanselme/helloworld/pkg/errors"
 	"github.com/sanselme/helloworld/pkg/version"
 	"github.com/spf13/cobra"
@@ -37,31 +33,7 @@ func main() {
 		Short:   "Hello Client",
 		Version: version.GetVersion(),
 		Args:    cobra.ExactArgs(1),
-		Run: func(cmd *cobra.Command, args []string) {
-			ctx, cancel := context.WithCancel(context.Background())
-			defer cancel()
-
-			conn, err := internal.Dial(ctx, endpoint)
-			if err != nil {
-				errors.CheckErr(err)
-			}
-			go func() {
-				<-ctx.Done()
-				if err := conn.Close(); err != nil {
-					errors.CheckErr(err)
-				}
-			}()
-
-			client := api.NewGreeterServiceClient(conn)
-			req := &api.SayHelloRequest{Name: args[0]}
-
-			res, err := client.SayHello(ctx, req)
-			if err != nil {
-				errors.CheckErr(err)
-			}
-
-			log.Println(res.Message)
-		},
+		RunE:    internal.RunClient,
 	}
 
 	cmd.Flags().StringVarP(&endpoint, "endpoint", "e", "localhost:8080", "Endpoint to connect to")
