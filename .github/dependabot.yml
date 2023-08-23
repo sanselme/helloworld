@@ -15,8 +15,3 @@ updates:
     directory: /
     schedule:
       interval: weekly
-  # Maintain dependencies for JavaScript
-  - package-ecosystem: npm
-    directory: /docs/openapi
-    schedule:
-      interval: weekly
