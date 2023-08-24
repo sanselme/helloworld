@@ -4,6 +4,7 @@ package api.v1alpha2;
 
 import "google/api/annotations.proto";
 import "cloudevents.proto";
+import "v1alpha2/messages.proto";
 
 // Here is the overall greeting service definition where we define all our endpoints
 service GreeterService {
@@ -14,16 +15,4 @@ service GreeterService {
       body: "*"
     };
   }
-}
-
-// The request message containing the user's name
-message SayHelloRequest {
-  // The name of the person to greet
-  string name = 1;
-}
-
-// The response message containing the greetings
-message SayHelloResponse {
-  // The message to greet the person with
-  CloudEvent message = 1;
 }

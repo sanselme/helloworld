@@ -28,7 +28,7 @@ escape_str() {
 }
 
 [[ -z ${SWAGGER_UI_VERSION} ]] &&
-  echo 'missing ${SWAGGER_UI_VERSION}' &&
+  echo "missing ${SWAGGER_UI_VERSION}" &&
   exit 1
 
 [[ ! -d ${OUTPUT_DIR} ]] && mkdir -p "${OUTPUT_DIR}"
@@ -67,4 +67,5 @@ sed -i'' -e "${line} s/^.*$/${escaped_tmp}/" "${OUTPUT_DIR}/swagger-initializer.
 rm -f "${OUTPUT_DIR}/swagger-initializer.js-e"
 
 # trunk.io
+buf generate
 trunk fmt --all
