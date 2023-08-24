@@ -4,7 +4,7 @@ cli:
 plugins:
   sources:
     - id: trunk
-      ref: v1.1.1
+      ref: v1.2.2
       uri: https://github.com/trunk-io/plugins
 lint:
   disabled:
@@ -26,16 +26,16 @@ lint:
     - goimports@0.9.1
     - buf-breaking@1.26.1
     - buf-format@1.26.1
-    - gitleaks@8.17.0
+    - gitleaks@8.18.0
     - gofumpt@0.5.0
     - golines@0.11.0
     - nancy@1.0.42
     - buf-lint@1.26.1
-    - checkov@2.4.5
+    - checkov@2.4.9
     - git-diff-check
     - gofmt@1.20.4
     - gokart@0.5.1
-    - golangci-lint@1.54.1
+    - golangci-lint@1.54.2
     - markdownlint@0.35.0
     - osv-scanner@1.3.6
     - remark-lint@11.0.0
@@ -44,7 +44,7 @@ lint:
     - yamllint@1.32.0
 runtimes:
   enabled:
-    - go@1.19.5
+    - go@1.21.0
     - node@18.12.1
     - python@3.10.8
 actions:

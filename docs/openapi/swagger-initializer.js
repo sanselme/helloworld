@@ -4,13 +4,14 @@ window.onload = function () {
 	// the following lines will be replaced by docker/configurator, when it runs in a docker-container
 	window.ui = SwaggerUIBundle({
 		urls: [
+			{ url: "cloudevents.swagger.json", name: "cloudevents.swagger.json" },
 			{
-				url: "v1alpha2/cloudevents.swagger.json",
-				name: "v1alpha2/cloudevents.swagger.json",
+				url: "v1alpha2/services.swagger.json",
+				name: "v1alpha2/services.swagger.json",
 			},
 			{
-				url: "v1alpha2/hello_world.swagger.json",
-				name: "v1alpha2/hello_world.swagger.json",
+				url: "v1alpha2/messages.swagger.json",
+				name: "v1alpha2/messages.swagger.json",
 			},
 			{
 				url: "v1alpha1/hello_world.swagger.json",

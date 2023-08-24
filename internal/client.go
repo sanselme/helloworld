@@ -20,7 +20,7 @@ import (
 	"context"
 	"log"
 
-	apiv1alpha2 "github.com/sanselme/helloworld/api/v1alpha2"
+	v1alpha2 "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/sanselme/helloworld/pkg/errors"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
@@ -57,8 +57,8 @@ func RunClient(cmd *cobra.Command, args []string) error {
 		}
 	}()
 
-	client := apiv1alpha2.NewGreeterServiceClient(conn)
-	req := &apiv1alpha2.SayHelloRequest{Name: args[0]}
+	client := v1alpha2.NewGreeterServiceClient(conn)
+	req := &v1alpha2.SayHelloRequest{Name: args[0]}
 
 	res, err := client.SayHello(ctx, req)
 	if err != nil {
