@@ -78,44 +78,8 @@
           "type": "string",
           "format": "date-time"
         }
-      }
-    },
-    "apiCloudEvent": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Required Attributes"
-        },
-        "source": {
-          "type": "string",
-          "title": "URI-reference"
-        },
-        "specVersion": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        },
-        "attributes": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/CloudEventCloudEventAttributeValue"
-          },
-          "title": "Optional \u0026 Extension Attributes"
-        },
-        "binaryData": {
-          "type": "string",
-          "format": "byte"
-        },
-        "textData": {
-          "type": "string"
-        },
-        "protoData": {
-          "$ref": "#/definitions/protobufAny"
-        }
       },
-      "title": "-- CloudEvent Context Attributes"
+      "description": "*\nThe CloudEvent specification defines\nseven attribute value types..."
     },
     "apiv1alpha2SayHelloRequest": {
       "type": "object",
@@ -131,7 +95,7 @@
       "type": "object",
       "properties": {
         "message": {
-          "$ref": "#/definitions/apiCloudEvent",
+          "$ref": "#/definitions/v1CloudEvent",
           "title": "The message to greet the person with"
         }
       },
@@ -166,6 +130,44 @@
           }
         }
       }
+    },
+    "v1CloudEvent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Required Attributes"
+        },
+        "source": {
+          "type": "string",
+          "title": "URI-reference"
+        },
+        "specVersion": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CloudEventCloudEventAttributeValue"
+          },
+          "title": "Optional \u0026 Extension Attributes"
+        },
+        "binaryData": {
+          "type": "string",
+          "format": "byte"
+        },
+        "textData": {
+          "type": "string"
+        },
+        "protoData": {
+          "$ref": "#/definitions/protobufAny"
+        }
+      },
+      "description": "-- CloudEvent Context Attributes",
+      "title": "CloudEvent Protobuf Format"
     }
   }
 }

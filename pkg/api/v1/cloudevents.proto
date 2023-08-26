@@ -5,14 +5,14 @@
  * - Optional and Extension context attributes are carried in a map structure.
  * - Data may be represented as binary, text, or protobuf messages.
  */
-
 syntax = "proto3";
 
-package api;
+package api.v1;
 
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
+// CloudEvent Protobuf Format
 message CloudEvent {
   // -- CloudEvent Context Attributes
 
@@ -36,7 +36,6 @@ message CloudEvent {
    * The CloudEvent specification defines
    * seven attribute value types...
    */
-
   message CloudEventAttributeValue {
     oneof attr {
       bool ce_boolean = 1;
@@ -54,7 +53,6 @@ message CloudEvent {
  * CloudEvent Protobuf Batch Format
  *
  */
-
 message CloudEventBatch {
   repeated CloudEvent events = 1;
 }
