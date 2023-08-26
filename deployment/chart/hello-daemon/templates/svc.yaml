@@ -33,6 +33,16 @@ spec:
             - /hellod
             - service
             - --port={{ .Values.helloDaemonService.service.port }}
+          resources:
+            {{- toYaml .Values.helloDaemonService.resources | nindent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 10
+            grpc:
+              port: {{ .Values.helloDaemonService.service.port }}
+          readinessProbe:
+            initialDelaySeconds: 10
+            grpc:
+              port: {{ .Values.helloDaemonService.service.port }}
       {{- with .Values.helloDaemonService.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

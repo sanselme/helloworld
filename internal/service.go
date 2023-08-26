@@ -26,7 +26,7 @@ import (
 	"github.com/anselmes/util/pkg/host"
 	"github.com/anselmes/util/pkg/util"
 	"github.com/google/uuid"
-	api "github.com/sanselme/helloworld/api"
+	v1 "github.com/sanselme/helloworld/api/v1"
 	v1alpha2 "github.com/sanselme/helloworld/api/v1alpha2"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
@@ -40,12 +40,12 @@ func (s *service) SayHello(
 	ctx context.Context,
 	in *v1alpha2.SayHelloRequest,
 ) (*v1alpha2.SayHelloResponse, error) {
-	event := &api.CloudEvent{
+	event := &v1.CloudEvent{
 		Id:          uuid.New().String(),
 		Source:      "https://github.com/sanselme/helloworld/api/v1alpha2",
 		SpecVersion: "1.0",
 		Type:        "es.anselm.helloworld",
-		Data:        &api.CloudEvent_TextData{TextData: fmt.Sprintf("%s world!", in.GetName())},
+		Data:        &v1.CloudEvent_TextData{TextData: fmt.Sprintf("%s world!", in.GetName())},
 	}
 	log.Println(event)
 

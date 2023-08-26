@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.v1alpha2;
 
 import "google/api/annotations.proto";
-import "cloudevents.proto";
+import "v1/cloudevents.proto";
 
 // The request message containing the user's name
 message SayHelloRequest {
@@ -14,5 +14,5 @@ message SayHelloRequest {
 // The response message containing the greetings
 message SayHelloResponse {
   // The message to greet the person with
-  CloudEvent message = 1;
+  v1.CloudEvent message = 1;
 }

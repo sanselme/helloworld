@@ -28,7 +28,7 @@ spec:
           securityContext:
             {{- toYaml .Values.helloDaemonGateway.securityContext | nindent 12 }}
           ports:
-            - name: h2c
+            - name: http
               containerPort: {{ .Values.helloDaemonGateway.service.port }}
           args:
             - /hellod
@@ -39,6 +39,16 @@ spec:
             - --oa-dir=/openapiv2
           resources:
             {{- toYaml .Values.helloDaemonGateway.resources | nindent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /healthz
+              port: http
       {{- with .Values.helloDaemonGateway.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
