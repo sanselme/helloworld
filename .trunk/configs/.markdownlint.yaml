@@ -9,3 +9,4 @@ spaces: false
 url: false
 whitespace: false
 headers: false
+link-fragments: false
