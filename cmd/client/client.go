@@ -32,7 +32,7 @@ func main() {
 		Use:     "helloctl",
 		Short:   "Hello Client",
 		Version: version.GetVersion(),
-		Args:    cobra.ExactArgs(1),
+		Args:    cobra.MaximumNArgs(1),
 		RunE:    internal.RunClient,
 	}
 
