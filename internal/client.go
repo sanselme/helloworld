@@ -41,6 +41,10 @@ func RunClient(cmd *cobra.Command, args []string) error {
 	ctx, cancel := context.WithCancel(cmd.Context())
 	defer cancel()
 
+	if len(args) < 1 {
+		return cmd.Help()
+	}
+
 	ep, err := cmd.Flags().GetString("endpoint")
 	if err != nil {
 		return err
