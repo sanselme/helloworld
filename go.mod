@@ -6,7 +6,6 @@ require (
 	contrib.go.opencensus.io/exporter/prometheus v0.4.2
 	github.com/anselmes/util v0.1.0-dev.0
 	github.com/cloudevents/sdk-go/observability/opencensus/v2 v2.14.0
-	github.com/cloudevents/sdk-go/v2 v2.14.0
 	github.com/google/uuid v1.3.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.0
 	github.com/spf13/cobra v1.7.0
@@ -22,6 +21,7 @@ require (
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/cloudevents/sdk-go/v2 v2.14.0 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect

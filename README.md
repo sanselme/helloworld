@@ -1,6 +1,10 @@
 # Readme
 
-[Documentation](./docs/README.md)
+***
+
+[Protocol Documentation](./docs/README.md)
+
+[Swagger UI](./docs/openapi/index.html)
 
 ***
 
