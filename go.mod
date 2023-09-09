@@ -7,7 +7,7 @@ require (
 	github.com/anselmes/util v0.1.0-dev.0
 	github.com/cloudevents/sdk-go/observability/opencensus/v2 v2.14.0
 	github.com/google/uuid v1.3.1
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.0
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.17.1
 	github.com/spf13/cobra v1.7.0
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/otel v1.17.0
