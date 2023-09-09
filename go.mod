@@ -11,7 +11,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/otel v1.17.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/sdk v1.17.0
 	google.golang.org/grpc v1.57.0
 )
