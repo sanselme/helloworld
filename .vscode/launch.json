@@ -11,8 +11,7 @@
       "mode": "auto",
       "program": "./cmd/daemon",
       "args": ["svc"]
-    },
-    {
+    }, {
       "name": "Hello Gateway",
       "type": "go",
       "request": "launch",

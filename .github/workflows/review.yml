@@ -1,7 +1,9 @@
 name: Pull Request Review
 
 on:
-  pull_request: {}
+  - pull_request
+
+permissions: read-all
 
 jobs:
   gate:

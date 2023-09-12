@@ -11,25 +11,12 @@ permissions: read-all
 jobs:
   gate:
     uses: labsonline/cicd/.github/workflows/gate.yml@main
-    permissions: write-all
-  scorecard:
-    uses: labsonline/cicd/.github/workflows/scorecard.yml@main
-    permissions:
-      actions: read
-      checks: read
-      contents: read
-      deployments: read
-      discussions: read
-      issues: read
-      packages: read
-      pages: read
-      pull-requests: read
-      repository-projects: read
-      statuses: read
-      id-token: write
-      security-events: write
-  cleanup:
-    uses: labsonline/cicd/.github/workflows/cleanup.yml@main
-    permissions:
-      issues: write
-      pull-requests: write
+  # scorecard:
+  #   uses: labsonline/cicd/.github/workflows/scorecard.yml@main
+  #   permissions:
+  #     security-events: write
+  #     id-token: write
+  # release:
+  #   uses: labsonline/cicd/.github/workflows/release.yml@main
+  # cleanup:
+  #   uses: labsonline/cicd/.github/workflows/cleanup.yml@main
