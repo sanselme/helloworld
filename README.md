@@ -2,9 +2,10 @@
 
 ***
 
-[Protocol Documentation](./docs/README.md)
-
+[Protocol Documentation](./docs/proto.md)
 [Swagger UI](./docs/openapi/index.html)
+
+[rs](./docs/rust.md)
 
 ***
 
