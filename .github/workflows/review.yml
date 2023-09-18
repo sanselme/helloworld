@@ -8,3 +8,5 @@ permissions: read-all
 jobs:
   gate:
     uses: labsonline/cicd/.github/workflows/review.yml@main
+    permissions:
+      pull-requests: write
