@@ -10,7 +10,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.0
 	github.com/spf13/cobra v1.7.0
 	go.opencensus.io v0.24.0
-	go.opentelemetry.io/otel v1.21.0
+	go.opentelemetry.io/otel v1.22.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/sdk v1.21.0
 	google.golang.org/grpc v1.58.0
@@ -22,7 +22,7 @@ require (
 	github.com/cloudevents/sdk-go/v2 v2.14.0 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
-	github.com/go-logr/logr v1.3.0 // indirect
+	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
@@ -38,8 +38,8 @@ require (
 	github.com/prometheus/statsd_exporter v0.22.7 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	go.opentelemetry.io/otel/metric v1.21.0 // indirect
-	go.opentelemetry.io/otel/trace v1.21.0 // indirect
+	go.opentelemetry.io/otel/metric v1.22.0 // indirect
+	go.opentelemetry.io/otel/trace v1.22.0 // indirect
 	go.uber.org/atomic v1.4.0 // indirect
 	go.uber.org/multierr v1.1.0 // indirect
 	go.uber.org/zap v1.10.0 // indirect
